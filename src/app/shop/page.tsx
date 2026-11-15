@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { buckets as options } from "../buckets";
 
 export const metadata: Metadata = {
   title: "Shop | Ice Bucketz",
 };
-
-// Placeholder menu: replace names, ingredients and prices with the real ones.
-const options = [
-  { name: "Option 1", ingredients: "Ingredients go here", price: "P00" },
-  { name: "Option 2", ingredients: "Ingredients go here", price: "P00" },
-  { name: "Option 3", ingredients: "Ingredients go here", price: "P00" },
-  { name: "Option 4", ingredients: "Ingredients go here", price: "P00" },
-];
 
 export default function Shop() {
   return (
@@ -37,23 +30,19 @@ export default function Shop() {
         <div className="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center py-10 sm:py-14">
           <header className="text-center">
             <h1 className="font-display text-4xl font-semibold text-accent sm:text-5xl xl:text-6xl">Ice Buckets</h1>
-            <Link
-              href="/shop"
-              className="mt-3 inline-block border-b border-foreground/60 pb-0.5 text-sm uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-accent hover:text-accent"
-            >
-              View all
-            </Link>
           </header>
 
           <ul className="mt-12 space-y-8 sm:mt-14 sm:space-y-10">
             {options.map((o) => (
-              <li key={o.name}>
-                <div className="flex items-baseline gap-3 sm:gap-4">
-                  <h2 className="font-display text-base font-semibold uppercase tracking-wider sm:text-lg">{o.name}</h2>
-                  <span className="h-px flex-1 translate-y-[-4px] bg-accent/50" />
-                  <span className="font-display text-base font-semibold text-accent sm:text-lg">{o.price}</span>
-                </div>
-                <p className="mt-1 pl-4 text-sm text-foreground/60 sm:pl-6">{o.ingredients}</p>
+              <li key={o.slug}>
+                <Link href={`/order?bucket=${o.slug}`} className="group block">
+                  <div className="flex items-baseline gap-3 sm:gap-4">
+                    <h2 className="font-display text-base font-semibold uppercase tracking-wider transition-colors group-hover:text-accent sm:text-lg">{o.name}</h2>
+                    <span className="h-px flex-1 translate-y-[-4px] bg-accent/50" />
+                    <span className="font-display text-base font-semibold text-accent sm:text-lg">{o.price}</span>
+                  </div>
+                  <p className="mt-1 pl-4 text-sm text-foreground/60 sm:pl-6">{o.ingredients}</p>
+                </Link>
               </li>
             ))}
           </ul>
